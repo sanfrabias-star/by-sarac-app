@@ -1,5 +1,4 @@
 import path from "path";
-import fs from "fs";
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 
@@ -25,13 +24,6 @@ export default defineConfig(({ mode }) => {
       outDir: "dist",
       emptyOutDir: true,
     },
-    base: "./", // 👈 Esto es CLAVE para que funcione en Netlify
+    base: "./", // ✅ necesario para rutas relativas correctas en Vercel
   };
 });
-
-// 🔧 Crear automáticamente el archivo _redirects en /dist
-const redirectsPath = path.resolve(__dirname, "dist", "_redirects");
-const redirectsContent = "/*    /index.html   200";
-fs.mkdirSync(path.dirname(redirectsPath), { recursive: true });
-fs.writeFileSync(redirectsPath, redirectsContent);
-console.log("✅ Archivo _redirects generado en /dist");
